@@ -18,7 +18,6 @@ package com.digi.xbee.api;
 import java.net.Inet6Address;
 
 import com.digi.xbee.api.connection.IConnectionInterface;
-import com.digi.xbee.api.connection.android.AndroidUSBPermissionListener;
 import com.digi.xbee.api.connection.serial.SerialPortParameters;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.OperationNotSupportedException;
@@ -36,7 +35,6 @@ import com.digi.xbee.api.packet.thread.CoAPTxRequestPacket;
 import com.digi.xbee.api.utils.ByteUtils;
 import com.digi.xbee.api.utils.HexUtils;
 
-import android.content.Context;
 
 /**
  * This class represents a local Thread device.
@@ -74,10 +72,6 @@ public class ThreadDevice extends IPv6Device {
 	 * @see #ThreadDevice(IConnectionInterface)
 	 * @see #ThreadDevice(String, SerialPortParameters)
 	 * @see #ThreadDevice(String, int, int, int, int, int)
-	 * @see #ThreadDevice(Context, int)
-	 * @see #ThreadDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #ThreadDevice(Context, String, int)
-	 * @see #ThreadDevice(Context, String, SerialPortParameters)
 	 */
 	public ThreadDevice(String port, int baudRate) {
 		this(XBee.createConnectiontionInterface(port, baudRate));
@@ -104,10 +98,6 @@ public class ThreadDevice extends IPv6Device {
 	 * @see #ThreadDevice(IConnectionInterface)
 	 * @see #ThreadDevice(String, int)
 	 * @see #ThreadDevice(String, SerialPortParameters)
-	 * @see #ThreadDevice(Context, int)
-	 * @see #ThreadDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #ThreadDevice(Context, String, int)
-	 * @see #ThreadDevice(Context, String, SerialPortParameters)
 	 */
 	public ThreadDevice(String port, int baudRate, int dataBits, int stopBits, int parity, int flowControl) {
 		this(port, new SerialPortParameters(baudRate, dataBits, stopBits, parity, flowControl));
@@ -126,118 +116,15 @@ public class ThreadDevice extends IPv6Device {
 	 * @see #ThreadDevice(IConnectionInterface)
 	 * @see #ThreadDevice(String, int)
 	 * @see #ThreadDevice(String, int, int, int, int, int)
-	 * @see #ThreadDevice(Context, int)
-	 * @see #ThreadDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #ThreadDevice(Context, String, int)
-	 * @see #ThreadDevice(Context, String, SerialPortParameters)
 	 * @see com.digi.xbee.api.connection.serial.SerialPortParameters
 	 */
 	public ThreadDevice(String port, SerialPortParameters serialPortParameters) {
 		this(XBee.createConnectiontionInterface(port, serialPortParameters));
 	}
 	
-	/**
-	 * Class constructor. Instantiates a new {@code ThreadDevice} object for
-	 * Android with the given parameters.
-	 * 
-	 * @param context The Android context.
-	 * @param baudRate The USB connection baud rate.
-	 * 
-	 * @throws IllegalArgumentException if {@code baudRate < 1}.
-	 * @throws NullPointerException if {@code context == null}.
-	 * 
-	 * @see #ThreadDevice(IConnectionInterface)
-	 * @see #ThreadDevice(String, int)
-	 * @see #ThreadDevice(String, int, int, int, int, int)
-	 * @see #ThreadDevice(String, SerialPortParameters)
-	 * @see #ThreadDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #ThreadDevice(Context, String, int)
-	 * @see #ThreadDevice(Context, String, SerialPortParameters)
-	 */
-	public ThreadDevice(Context context, int baudRate) {
-		super(XBee.createConnectiontionInterface(context, baudRate));
-	}
-	
-	/**
-	 * Class constructor. Instantiates a new {@code ThreadDevice} object for
-	 * Android with the given parameters.
-	 * 
-	 * @param context The Android context.
-	 * @param baudRate The USB connection baud rate.
-	 * @param permissionListener The USB permission listener that will be 
-	 *                           notified when user grants USB permissions.
-	 * 
-	 * @throws IllegalArgumentException if {@code baudRate < 1}.
-	 * @throws NullPointerException if {@code context == null}.
-	 * 
-	 * @see #ThreadDevice(IConnectionInterface)
-	 * @see #ThreadDevice(String, int)
-	 * @see #ThreadDevice(String, int, int, int, int, int)
-	 * @see #ThreadDevice(String, SerialPortParameters)
-	 * @see #ThreadDevice(Context, int)
-	 * @see #ThreadDevice(Context, String, int)
-	 * @see #ThreadDevice(Context, String, SerialPortParameters)
-	 * @see com.digi.xbee.api.connection.android.AndroidUSBPermissionListener
-	 */
-	public ThreadDevice(Context context, int baudRate, AndroidUSBPermissionListener permissionListener) {
-		super(XBee.createConnectiontionInterface(context, baudRate, permissionListener));
-	}
-	
-	/**
-	 * Class constructor. Instantiates a new {@code ThreadDevice} object for
-	 * Android with the given parameters.
-	 * 
-	 * <p>This constructor uses the Digi Android Serial Port API based on the
-	 * RxTx library to communicate with the devices.</p>
-	 * 
-	 * @param context The Android application context.
-	 * @param port Serial port name where XBee device is attached to.
-	 * @param baudRate The serial port connection baud rate.
-	 * 
-	 * @throws NullPointerException If {@code context == null} or
-	 *                              if {@code port == null}.
-	 * @throws IllegalArgumentException if {@code baudRate < 1}.
-	 * 
-	 * @see #ThreadDevice(IConnectionInterface)
-	 * @see #ThreadDevice(String, int)
-	 * @see #ThreadDevice(String, int, int, int, int, int)
-	 * @see #ThreadDevice(String, SerialPortParameters)
-	 * @see #ThreadDevice(Context, int)
-	 * @see #ThreadDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #ThreadDevice(Context, String, SerialPortParameters)
-	 */
-	public ThreadDevice(Context context, String port, int baudRate) {
-		super(XBee.createConnectiontionInterface(context, port, baudRate));
-	}
-	
-	/**
-	 * Class constructor. Instantiates a new {@code ThreadDevice} object for
-	 * Android with the given parameters.
-	 * 
-	 * <p>This constructor uses the Digi Android Serial Port API based on the
-	 * RxTx library to communicate with the devices.</p>
-	 * 
-	 * @param context The Android application context.
-	 * @param port Serial port name where XBee device is attached to.
-	 * @param parameters The serial port parameters.
-	 * 
-	 * @throws NullPointerException If {@code context == null} or
-	 *                              if {@code port == null} or
-	 *                              if {@code parameters == null}.
-	 * 
-	 * @see #ThreadDevice(IConnectionInterface)
-	 * @see #ThreadDevice(String, int)
-	 * @see #ThreadDevice(String, int, int, int, int, int)
-	 * @see #ThreadDevice(String, SerialPortParameters)
-	 * @see #ThreadDevice(Context, int)
-	 * @see #ThreadDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #ThreadDevice(Context, String, int)
-	 * @see com.digi.xbee.api.connection.serial.SerialPortParameters
-	 */
-	public ThreadDevice(Context context, String port, SerialPortParameters parameters) {
-		super(XBee.createConnectiontionInterface(context, port, parameters));
-	}
-	
+
+
+
 	/**
 	 * Class constructor. Instantiates a new {@code ThreadDevice} object with 
 	 * the given connection interface.
@@ -250,10 +137,6 @@ public class ThreadDevice extends IPv6Device {
 	 * @see #ThreadDevice(String, int)
 	 * @see #ThreadDevice(String, SerialPortParameters)
 	 * @see #ThreadDevice(String, int, int, int, int, int)
-	 * @see #ThreadDevice(Context, int)
-	 * @see #ThreadDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #ThreadDevice(Context, String, int)
-	 * @see #ThreadDevice(Context, String, SerialPortParameters)
 	 * @see com.digi.xbee.api.connection.IConnectionInterface
 	 */
 	public ThreadDevice(IConnectionInterface connectionInterface) {

@@ -15,12 +15,10 @@
  */
 package com.digi.xbee.api;
 
-import android.content.Context;
 
 import java.net.Inet6Address;
 
 import com.digi.xbee.api.connection.IConnectionInterface;
-import com.digi.xbee.api.connection.android.AndroidUSBPermissionListener;
 import com.digi.xbee.api.connection.serial.SerialPortParameters;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
@@ -64,10 +62,6 @@ public class DigiPointDevice extends XBeeDevice {
 	 * @see #DigiPointDevice(IConnectionInterface)
 	 * @see #DigiPointDevice(String, SerialPortParameters)
 	 * @see #DigiPointDevice(String, int, int, int, int, int)
-	 * @see #DigiPointDevice(Context, int)
-	 * @see #DigiPointDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #DigiPointDevice(Context, String, int)
-	 * @see #DigiPointDevice(Context, String, SerialPortParameters)
 	 */
 	public DigiPointDevice(String port, int baudRate) {
 		this(XBee.createConnectiontionInterface(port, baudRate));
@@ -94,10 +88,6 @@ public class DigiPointDevice extends XBeeDevice {
 	 * @see #DigiPointDevice(IConnectionInterface)
 	 * @see #DigiPointDevice(String, int)
 	 * @see #DigiPointDevice(String, SerialPortParameters)
-	 * @see #DigiPointDevice(Context, int)
-	 * @see #DigiPointDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #DigiPointDevice(Context, String, int)
-	 * @see #DigiPointDevice(Context, String, SerialPortParameters)
 	 */
 	public DigiPointDevice(String port, int baudRate, int dataBits, int stopBits, int parity, int flowControl) {
 		this(port, new SerialPortParameters(baudRate, dataBits, stopBits, parity, flowControl));
@@ -116,126 +106,13 @@ public class DigiPointDevice extends XBeeDevice {
 	 * @see #DigiPointDevice(IConnectionInterface)
 	 * @see #DigiPointDevice(String, int)
 	 * @see #DigiPointDevice(String, int, int, int, int, int)
-	 * @see #DigiPointDevice(Context, int)
-	 * @see #DigiPointDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #DigiPointDevice(Context, String, int)
-	 * @see #DigiPointDevice(Context, String, SerialPortParameters)
 	 * @see com.digi.xbee.api.connection.serial.SerialPortParameters
 	 */
 	public DigiPointDevice(String port, SerialPortParameters serialPortParameters) {
 		this(XBee.createConnectiontionInterface(port, serialPortParameters));
 	}
 	
-	/**
-	 * Class constructor. Instantiates a new {@code DigiPointDevice} object for
-	 * Android with the given parameters.
-	 * 
-	 * @param context The Android context.
-	 * @param baudRate The USB connection baud rate.
-	 * 
-	 * @throws IllegalArgumentException if {@code baudRate < 1}.
-	 * @throws NullPointerException if {@code context == null}.
-	 * 
-	 * @see #DigiPointDevice(IConnectionInterface)
-	 * @see #DigiPointDevice(String, int)
-	 * @see #DigiPointDevice(String, SerialPortParameters)
-	 * @see #DigiPointDevice(String, int, int, int, int, int)
-	 * @see #DigiPointDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #DigiPointDevice(Context, String, int)
-	 * @see #DigiPointDevice(Context, String, SerialPortParameters)
-	 * 
-	 * @since 1.2.0
-	 */
-	public DigiPointDevice(Context context, int baudRate) {
-		super(XBee.createConnectiontionInterface(context, baudRate));
-	}
-	
-	/**
-	 * Class constructor. Instantiates a new {@code DigiPointDevice} object for
-	 * Android with the given parameters.
-	 * 
-	 * @param context The Android context.
-	 * @param baudRate The USB connection baud rate.
-	 * @param permissionListener The USB permission listener that will be 
-	 *                           notified when user grants USB permissions.
-	 * 
-	 * @throws IllegalArgumentException if {@code baudRate < 1}.
-	 * @throws NullPointerException if {@code context == null}.
-	 * 
-	 * @see #DigiPointDevice(IConnectionInterface)
-	 * @see #DigiPointDevice(String, int)
-	 * @see #DigiPointDevice(String, SerialPortParameters)
-	 * @see #DigiPointDevice(String, int, int, int, int, int)
-	 * @see #DigiPointDevice(Context, int)
-	 * @see #DigiPointDevice(Context, String, int)
-	 * @see #DigiPointDevice(Context, String, SerialPortParameters)
-	 * @see com.digi.xbee.api.connection.android.AndroidUSBPermissionListener
-	 * 
-	 * @since 1.2.0
-	 */
-	public DigiPointDevice(Context context, int baudRate, AndroidUSBPermissionListener permissionListener) {
-		super(XBee.createConnectiontionInterface(context, baudRate, permissionListener));
-	}
-	
-	/**
-	 * Class constructor. Instantiates a new {@code DigiPointDevice} object for
-	 * Android with the given parameters.
-	 * 
-	 * <p>This constructor uses the Digi Android Serial Port API based on the
-	 * RxTx library to communicate with the devices.</p>
-	 * 
-	 * @param context The Android application context.
-	 * @param port Serial port name where XBee device is attached to.
-	 * @param baudRate The serial port connection baud rate.
-	 * 
-	 * @throws NullPointerException If {@code context == null} or
-	 *                              if {@code port == null}.
-	 * @throws IllegalArgumentException if {@code baudRate < 1}.
-	 * 
-	 * @see #DigiPointDevice(IConnectionInterface)
-	 * @see #DigiPointDevice(String, int)
-	 * @see #DigiPointDevice(String, SerialPortParameters)
-	 * @see #DigiPointDevice(String, int, int, int, int, int)
-	 * @see #DigiPointDevice(Context, int)
-	 * @see #DigiPointDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #DigiPointDevice(Context, String, SerialPortParameters)
-	 * 
-	 * @since 1.2.0
-	 */
-	public DigiPointDevice(Context context, String port, int baudRate) {
-		super(XBee.createConnectiontionInterface(context, port, baudRate));
-	}
-	
-	/**
-	 * Class constructor. Instantiates a new {@code DigiPointDevice} object for
-	 * Android with the given parameters.
-	 * 
-	 * <p>This constructor uses the Digi Android Serial Port API based on the
-	 * RxTx library to communicate with the devices.</p>
-	 * 
-	 * @param context The Android application context.
-	 * @param port Serial port name where XBee device is attached to.
-	 * @param parameters The serial port parameters.
-	 * 
-	 * @throws NullPointerException If {@code context == null} or
-	 *                              if {@code port == null} or
-	 *                              if {@code parameters == null}.
-	 * 
-	 * @see #DigiPointDevice(IConnectionInterface)
-	 * @see #DigiPointDevice(String, int)
-	 * @see #DigiPointDevice(String, SerialPortParameters)
-	 * @see #DigiPointDevice(String, int, int, int, int, int)
-	 * @see #DigiPointDevice(Context, int)
-	 * @see #DigiPointDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #DigiPointDevice(Context, String, int)
-	 * @see com.digi.xbee.api.connection.serial.SerialPortParameters
-	 * 
-	 * @since 1.2.0
-	 */
-	public DigiPointDevice(Context context, String port, SerialPortParameters parameters) {
-		super(XBee.createConnectiontionInterface(context, port, parameters));
-	}
-	
+
 	/**
 	 * Class constructor. Instantiates a new {@code DigiPointDevice} object with the 
 	 * given connection interface.
@@ -248,10 +125,6 @@ public class DigiPointDevice extends XBeeDevice {
 	 * @see #DigiPointDevice(String, int)
 	 * @see #DigiPointDevice(String, SerialPortParameters)
 	 * @see #DigiPointDevice(String, int, int, int, int, int)
-	 * @see #DigiPointDevice(Context, int)
-	 * @see #DigiPointDevice(Context, int, AndroidUSBPermissionListener)
-	 * @see #DigiPointDevice(Context, String, int)
-	 * @see #DigiPointDevice(Context, String, SerialPortParameters)
 	 * @see com.digi.xbee.api.connection.IConnectionInterface
 	 */
 	public DigiPointDevice(IConnectionInterface connectionInterface) {
